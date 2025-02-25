@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hackathon Management</title>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: black;
+            background-image: url("views\hhhhh.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        nav {
+            background: rgba(0, 0, 0, 0.7);
+            height: 80px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            backdrop-filter: blur(10px);
+        }
+
+        nav ul {
+            float: right;
+            margin-right: 30px;
+        }
+
+        nav ul li {
+            display: inline-block;
+            line-height: 80px;
+            margin: 0 5px;
+            color: white;
+            font-size: 20px;
+            font-family: sans-serif;
+        }
+
+        label.logo {
+            color: white;
+            font-size: 26px;
+            line-height: 80px;
+            padding: 0 70px;
+            font-weight: bold;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+
+        /* Search Bar Styling */
+        nav form {
+            display: flex;
+            align-items: center;
+            border-radius: 4px;
+            padding: 5px 10px;
+            margin-top: 20px;
+        }
+
+        nav input {
+            border: none;
+            outline: none;
+            padding: 8px 12px;
+            font-size: 16px;
+            border-radius: 20px;
+            width: 180px;
+            background: white;
+        }
+
+        nav button {
+            background-color: #28a745;
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-left: 5px;
+            font-size: 16px;
+        }
+
+        nav button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <label class="logo">Hackathon Management</label>
+        <ul>
+            <li>Home</li>
+            <a href="http://localhost:3000/home/signin"><li>Login</li></a>
+            <li>
+                <form action="">
+                    <input type="text" placeholder="Search members">
+                    <button type="submit">Go</button>
+                </form>
+            </li>
+        </ul>
+    </nav>
+
+
+</body>
+
+</html>

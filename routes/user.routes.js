@@ -39,6 +39,13 @@ function jwtAuthCookie(req,res,next){
         return res.redirect("/");
     }
 }
+
+
+router.get("/",(req,res)=>{
+    res.render('home');
+})
+
+
 //signup route
 
 router.get("/signup",(req,res)=>{
@@ -86,13 +93,11 @@ router.post("/signin",validateUserLogin,async (req,res)=>{
     },process.env.JWT_SECRET)
 
     res.cookie(token);
-    console.log({token});
-    res.send('logged in');
+    res.redirect("/home");
 })
 
 
-router.get("/view-users",jwtAuthCookie, (req,res)=>{
-    res.redirect("/"); 
-})
+router.use(jwtAuthCookie());
+
 
 module.exports = router;
