@@ -4,7 +4,7 @@ const userModel = require('../models/user.model');
 const bcrypt = require('bcrypt');
 const zod = require('zod');
 const jwt = require('jsonwebtoken');
-
+const jwtAuth = require('/PROJECTS/BACKENDFORM/authmiddleware/jwt');
 const nameInputSchema = zod.string().trim().min(6).max(20);
 const emailInputSchema = zod.string().email().trim();
 const passwordInputSchema = zod.string().trim().min(8).max(30)
@@ -28,17 +28,6 @@ function validateUserLogin(req,res,next){
     next();
 }
 
-function jwtAuthCookie(req,res,next){
-    const token = req.cookies.token;
-    try{
-        const decoded = jwt.verify(token,process.env.JWT_SECRET);
-        req.user = decoded;
-        next();
-    } catch(err){
-        res.clearCookie("token");
-        return res.redirect("/");
-    }
-}
 
 
 router.get("/",(req,res)=>{
@@ -61,6 +50,14 @@ router.post("/signup",validateUserSignUp,async (req,res)=>{
         email,
         password:hashPassword
     })
+    
+
+    const token = jwt.sign({
+        email ,username
+    },process.env.JWT_SECRET)
+
+    console.log(token);
+    res.redirect('/home')
 })
 
 
@@ -87,17 +84,24 @@ router.post("/signin",validateUserLogin,async (req,res)=>{
     }
 
     const token = jwt.sign({
-        userId : user._id,
         email : user.email,
         username : user.username
     },process.env.JWT_SECRET)
-
-    res.cookie(token);
-    res.redirect("/home");
+    res.cookie('token',token);
+    setTimeout(()=>{res.redirect("/home")},1000);
 })
 
 
-router.use(jwtAuthCookie());
+
+//logout route
+router.get("/logout",jwtAuth,async (req,res)=>{
+    try{
+        res.clearCookie("token");
+        return setTimeout(()=>{res.redirect("/home/signin")},1000);
+    } catch(err){
+        res.status(500).send("SOME ERROR");
+    }
+})
 
 
 module.exports = router;
