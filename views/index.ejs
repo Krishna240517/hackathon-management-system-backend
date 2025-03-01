@@ -7,6 +7,34 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="/css/style.css"> <!--LINK TO CSS-->
     <title>Modern Login Page | AsmrProg</title>
+    <style>
+        /* Style for the dropdown to match input fields */
+        select {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: #fff;
+            color: #333;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: bold;
+            color: #555;
+            margin-top: 10px;
+            display: block;
+        }
+    </style>
 </head>
 
 <body>
@@ -18,7 +46,19 @@
                 <input type="text" name="username" id="username" placeholder="Name" required>
                 <input type="email" name="email" id="email" placeholder="Email" required>
                 <input type="password" name="password" id="password" placeholder="Password" required>
-                <button type="submit" id="signupbutton">Sign Up</button>
+
+                <!-- Developer Role Dropdown -->
+                <label for="role">Select Developer Role</label>
+                <select name="role" id="role" required>
+                    <option value="">-- Select Role --</option>
+                    <option value="Frontend Developer">Frontend Developer</option>
+                    <option value="Backend Developer">Backend Developer</option>
+                    <option value="Full Stack Developer">Full Stack Developer</option>
+                    <option value="UI/UX Designer">UI/UX Designer</option>
+                    <option value="Data Scientist">Data Scientist</option>
+                </select>
+
+                <button type="submit" id="signupbutton">NEXT</button>
             </form>
         </div>
         <div class="form-container sign-in">

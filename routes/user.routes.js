@@ -9,6 +9,7 @@ const nameInputSchema = zod.string().trim().min(6).max(20);
 const emailInputSchema = zod.string().email().trim();
 const passwordInputSchema = zod.string().trim().min(8).max(30)
 
+
 function validateUserSignUp(req, res, next) {
     const validateName = nameInputSchema.safeParse(req.body.username);
     const validateEmail = emailInputSchema.safeParse(req.body.email);
@@ -41,7 +42,7 @@ router.get("/signup", (req, res) => {
     res.render('index');
 })
 router.post("/signup", validateUserSignUp, async (req, res) => {
-    const { username, email, password } = req.body;
+    const { username, email, password, role} = req.body;
     const user = await userModel.findOne({ username: username });
     if (user) {
         res.send("USERNAME ALREADY IN USE");
@@ -50,7 +51,8 @@ router.post("/signup", validateUserSignUp, async (req, res) => {
         await userModel.create({
             username,
             email,
-            password: hashPassword
+            password: hashPassword,
+            role
         })
     }
 
@@ -58,8 +60,7 @@ router.post("/signup", validateUserSignUp, async (req, res) => {
     const token = jwt.sign({
         email, username
     }, process.env.JWT_SECRET)
-
-    console.log(token);
+    res.cookie('token',token);
     res.redirect('/home')
 })
 
@@ -73,6 +74,9 @@ router.get("/signin", (req, res) => {
 })
 
 router.post("/signin", validateUserLogin, async (req, res) => {
+    if(jwtAuth){
+        res.json({message : "Already Logged In"});
+    }
     const { username, password } = req.body;
     const user = await userModel.findOne({
         username: username
@@ -83,7 +87,7 @@ router.post("/signin", validateUserLogin, async (req, res) => {
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-        return res.status(403).json({ message: "usernmae or password is incorrect" });
+        return res.status(403).json({ message: "username or password is incorrect" });
     }
 
     const token = jwt.sign({
@@ -105,6 +109,9 @@ router.get("/logout", jwtAuth, async (req, res) => {
         res.status(500).send("SOME ERROR");
     }
 })
+
+
+//profile route
 
 
 module.exports = router;
