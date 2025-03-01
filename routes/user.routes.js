@@ -5,6 +5,18 @@ const bcrypt = require('bcrypt');
 const zod = require('zod');
 const jwt = require('jsonwebtoken');
 const jwtAuth = require('/PROJECTS/BACKENDFORM/authmiddleware/jwt');
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination : function(req,file,cb){
+        cb(null,'uploads/');
+    },
+    filename : function(req,file,cb){
+        const suffix = Date.now();
+        cb(null,suffix+"-"+file.originalname);
+    }
+});
+const upload = multer({storage});
+
 const nameInputSchema = zod.string().trim().min(6).max(20);
 const emailInputSchema = zod.string().email().trim();
 const passwordInputSchema = zod.string().trim().min(8).max(30)
@@ -41,8 +53,11 @@ router.get("/", (req, res) => {
 router.get("/signup", (req, res) => {
     res.render('index');
 })
-router.post("/signup", validateUserSignUp, async (req, res) => {
+
+router.post("/signup", upload.single('photo'), validateUserSignUp, async (req, res) => {
+    console.log(req.file);
     const { username, email, password, role} = req.body;
+    const photopath = req.file ? req.file.path : null;
     const user = await userModel.findOne({ username: username });
     if (user) {
         res.send("USERNAME ALREADY IN USE");
@@ -52,7 +67,8 @@ router.post("/signup", validateUserSignUp, async (req, res) => {
             username,
             email,
             password: hashPassword,
-            role
+            role,
+            photo : photopath
         })
     }
 
@@ -112,6 +128,8 @@ router.get("/logout", jwtAuth, async (req, res) => {
 
 
 //profile route
-
+router.get("/upload",(req,res)=>{
+    res.render('image');
+})
 
 module.exports = router;
