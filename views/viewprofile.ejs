@@ -4,8 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script>src = "https://cdn.tailwindcss.com"</script>
 </head>
-<body>
-    <h1>PROFILE</h1>
+<body style="background-color: #434343;">
+    <form onSubmit={handlePostSubmit} className="mb-6">
+        <textarea
+          className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400"
+          placeholder="What's on your mind?"
+          rows="3"
+        ></textarea>
+        <button
+          type="submit"
+          className="mt-2 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
+        >
+          Post
+        </button>
+      </form>
 </body>
 </html>

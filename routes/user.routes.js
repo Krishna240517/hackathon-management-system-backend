@@ -122,8 +122,10 @@ router.get("/logout", jwtAuth, async (req, res) => {
 })
 
 //profile route
-router.get("/profile",(req,res)=>{
-    
+router.get("/profile",jwtAuth, async(req,res)=>{
+    let userDetail = await userModel.findOne({username : req.user.username});
+    // console.log(userDetail);
+    res.render('viewprofile',{userDetail});
 })
 
 module.exports = router;
