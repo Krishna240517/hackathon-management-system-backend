@@ -4,18 +4,8 @@ const userModel = require('../models/user.model');
 const bcrypt = require('bcrypt');
 const zod = require('zod');
 const jwt = require('jsonwebtoken');
-const jwtAuth = require('/PROJECTS/BACKENDFORM/authmiddleware/jwt');
-const multer = require('multer');
-const storage = multer.diskStorage({
-    destination : function(req,file,cb){
-        cb(null,'uploads/');
-    },
-    filename : function(req,file,cb){
-        const suffix = Date.now();
-        cb(null,suffix+"-"+file.originalname);
-    }
-});
-const upload = multer({storage});
+const jwtAuth = require('../authmiddleware/jwt');
+const upload = require('../config/multerconfig');
 
 const nameInputSchema = zod.string().trim().min(3).max(20);
 const emailInputSchema = zod.string().email().trim();

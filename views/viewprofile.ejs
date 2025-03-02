@@ -4,21 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script>src = "https://cdn.tailwindcss.com"</script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
 </head>
-<body style="background-color: #434343;">
-    <form onSubmit={handlePostSubmit} className="mb-6">
-        <textarea
-          className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400"
-          placeholder="What's on your mind?"
-          rows="3"
-        ></textarea>
-        <button
-          type="submit"
-          className="mt-2 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
-        >
-          Post
-        </button>
-      </form>
+<body>
+    <div class="flex items-start gap-3">
+        <div class="w-10 h-10 bg-red-500 rounded-mb">
+            <img class="w-full h-full object-cover" src="/public/uploads/<%=userDetail.photo%>" alt="">
+        </div>
+        <h3 class="text-3xl"><span class="font-light">Hello</span>, <%=userDetail.username%>👋</h3>
+    </div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 </html>
