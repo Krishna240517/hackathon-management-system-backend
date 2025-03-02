@@ -21,7 +21,27 @@ const nameInputSchema = zod.string().trim().min(3).max(20);
 const emailInputSchema = zod.string().email().trim();
 const passwordInputSchema = zod.string().trim().min(8).max(30)
 
+function userSignUp(req,res,next){
+    const validateName = nameInputSchema.safeParse(req.body.username);
+    const validateEmail = emailInputSchema.safeParse(req.body.email);
+    const validatePass = passwordInputSchema.safeParse(req.body.password);
+    if (!validateName.success || !validateEmail.success || !validatePass.success) {
+        console.log(validateEmail.success);
+        console.log(validatePass.success);
+        console.log(validateName.success);
+        return res.status(403).json({ message: "WRONG INPUT TRY AGAIN" })
+    }
+    next();
+}
 
+function userSignIn(req,res,next){
+    const validateName = nameInputSchema.safeParse(req.body.username);
+    const validatePass = passwordInputSchema.safeParse(req.body.password);
+    if (!validateName.success || !validatePass.success) {
+        return res.status(403).json({ message: "WRONG INPUT TRY AGAIN" })
+    }
+    next();
+}
 
 
 router.get("/", (req, res) => {
@@ -35,18 +55,7 @@ router.get("/signup", (req, res) => {
     res.render('index');
 })
 
-router.post("/signup", upload.single("photo"), function(req,res,next){
-    const validateName = nameInputSchema.safeParse(req.body.username);
-    const validateEmail = emailInputSchema.safeParse(req.body.email);
-    const validatePass = passwordInputSchema.safeParse(req.body.password);
-    if (!validateName.success || !validateEmail.success || !validatePass.success) {
-        console.log(validateEmail.success);
-        console.log(validatePass.success);
-        console.log(validateName.success);
-        return res.status(403).json({ message: "WRONG INPUT TRY AGAIN" })
-    }
-    next();
-}, async (req, res) => {
+router.post("/signup", upload.single("photo"), userSignUp, async (req, res) => {
     const { username, email, password, role} = req.body;
     const photopath = req.file ? req.file.path : null;
     const user = await userModel.findOne({ username: username });
@@ -78,17 +87,7 @@ router.get("/signin", (req, res) => {
     res.render('index');
 })
 
-router.post("/signin", function(req,res,next){
-    const validateName = nameInputSchema.safeParse(req.body.username);
-    const validatePass = passwordInputSchema.safeParse(req.body.password);
-    if (!validateName.success || !validatePass.success) {
-        return res.status(403).json({ message: "WRONG INPUT TRY AGAIN" })
-    }
-    next();
-}, async (req, res) => {
-    if(jwtAuth){
-        res.json({message : "Already Logged In"});
-    }
+router.post("/signin", userSignIn, async (req, res) => {
     const { username, password } = req.body;
     const user = await userModel.findOne({
         username: username
@@ -122,13 +121,9 @@ router.get("/logout", jwtAuth, async (req, res) => {
     }
 })
 
-
 //profile route
-router.get("/upload",(req,res)=>{
-    res.render('image');
+router.get("/profile",(req,res)=>{
+    
 })
-
-
-
 
 module.exports = router;
