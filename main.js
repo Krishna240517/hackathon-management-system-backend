@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-
+const path = require('path');
 
 //for connecting backend to frontend
 app.set('view engine', 'ejs');

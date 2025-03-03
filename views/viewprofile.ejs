@@ -3,17 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+    <title>User Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <div class="flex items-start gap-3">
-        <div class="w-10 h-10 bg-red-500 rounded-mb">
-            <img class="w-full h-full object-cover" src="/public/uploads/<%=userDetail.photo%>" alt="">
+<body class="bg-gray-800 min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-2xl">
+        <div class="bg-gray-700 shadow-xl rounded-lg overflow-hidden">
+            <!-- Profile Photo Section -->
+            <div class="flex justify-center pt-6">
+
+                <img src="https://picsum.photos/100?random=1" alt="Random Profile Picture"  class="w-32 h-32 rounded-full border-4 border-gray-600 object-cover">
+            </div>
+
+            <!-- User Details Table -->
+            <div class="p-6">
+                <h2 class="text-2xl font-bold text-white text-center mb-6">User Profile</h2>
+                <table class="w-full text-white">
+                    <tbody>
+                        <tr class="border-b border-gray-600">
+                            <td class="py-3 px-4 font-semibold w-1/3">Name</td>
+                            <td class="py-3 px-4"><%= userDetail.username || 'N/A' %></td>
+                        </tr>
+                        <tr class="border-b border-gray-600">
+                            <td class="py-3 px-4 font-semibold">Email</td>
+                            <td class="py-3 px-4"><%= userDetail.email || 'N/A' %></td>
+                        </tr>
+                        <tr class="border-b border-gray-600">
+                            <td class="py-3 px-4 font-semibold">Dev Role</td>
+                            <td class="py-3 px-4"><%= userDetail.role || 'N/A' %></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Optional Edit Button -->
+            <div class="p-6 flex justify-center">
+                <a 
+                    href="/edit-profile" 
+                    class="bg-gray-600 hover:bg-gray-500 text-white font-semibold py-2 px-6 rounded-lg transition duration-300"
+                >
+                    Edit Profile
+                </a>
+            </div>
         </div>
-        <h3 class="text-3xl"><span class="font-light">Hello</span>, <%=userDetail.username%>👋</h3>
     </div>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 </html>
