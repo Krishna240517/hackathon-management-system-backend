@@ -21,9 +21,6 @@ const userSchema = new mongoose.Schema({
     role : {
         type : String,
         required : true,
-    },
-    photo : {
-        type : String
     }
 })
 

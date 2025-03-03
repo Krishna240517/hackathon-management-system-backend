@@ -5,7 +5,6 @@ const bcrypt = require('bcrypt');
 const zod = require('zod');
 const jwt = require('jsonwebtoken');
 const jwtAuth = require('../authmiddleware/jwt');
-const upload = require('../config/multerconfig');
 
 const nameInputSchema = zod.string().trim().min(3).max(20);
 const emailInputSchema = zod.string().email().trim();
@@ -45,7 +44,7 @@ router.get("/signup", (req, res) => {
     res.render('index');
 })
 
-router.post("/signup", upload.single("photo"), userSignUp, async (req, res) => {
+router.post("/signup", userSignUp, async (req, res) => {
     const { username, email, password, role} = req.body;
     const photopath = req.file ? req.file.path : null;
     const user = await userModel.findOne({ username: username });
